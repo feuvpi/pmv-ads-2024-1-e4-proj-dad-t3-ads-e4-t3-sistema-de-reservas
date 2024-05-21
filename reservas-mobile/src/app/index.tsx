@@ -7,14 +7,15 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  Alert,
+  ScrollView,
 } from "react-native";
 
-export default function LoginScreen() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
-  // showAlert = (viewId) => Alert.alert("Alert", "Button pressed " + viewId);
+export default function RegistrationScreen() {
+  const [selectedTab, setSelectedTab] = useState("one");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [cpfCnpj, setCpfCnpj] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <ImageBackground
@@ -24,59 +25,131 @@ export default function LoginScreen() {
       style={styles.container}
     >
       <View style={styles.overlay} />
-      <View style={styles.inputContainer}>
+      <View
+        style={{
+          backgroundColor: "white",
+          padding: 10,
+          borderRadius: 20,
+          marginBottom: 30,
+        }}
+      >
         <Image
-          style={styles.inputIcon}
-          source={{
-            uri: "https://img.icons8.com/ios-filled/512/circled-envelope.png",
+          source={require("../../assets/images/logo2.png")}
+          style={{
+            width: 70,
+            height: 70,
+            resizeMode: "contain",
           }}
         />
-        <TextInput
-          style={styles.inputs}
-          placeholder="Email"
-          keyboardType="email-address"
-          underlineColorAndroid="transparent"
-          // onChangeText={(email) => setEmail({ email })}
-        />
       </View>
 
-      <View style={styles.inputContainer}>
-        <Image
-          style={styles.inputIcon}
-          source={{ uri: "https://img.icons8.com/ios-glyphs/512/key.png" }}
-        />
-        <TextInput
-          style={styles.inputs}
-          placeholder="Password"
-          secureTextEntry={true}
-          underlineColorAndroid="transparent"
-          // onChangeText={(password) => setPassword({ password })}
-        />
+      <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={[styles.tab, selectedTab === "one" ? styles.activeTab : null]}
+          onPress={() => setSelectedTab("one")}
+        >
+          <Text style={styles.tabText}>Usuário</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tab, selectedTab === "two" ? styles.activeTab : null]}
+          onPress={() => setSelectedTab("two")}
+        >
+          <Text style={styles.tabText}>Condomínio</Text>
+        </TouchableOpacity>
       </View>
+      <View style={styles.formContainer}>
+        <View style={styles.inputContainer}>
+          <Image
+            style={styles.inputIcon}
+            source={{
+              uri: "https://img.icons8.com/ios-filled/512/user.png",
+            }}
+          />
+          <TextInput
+            style={styles.inputs}
+            placeholder="Nome"
+            underlineColorAndroid="transparent"
+            value={name}
+            onChangeText={(text) => setName(text)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Image
+            style={styles.inputIcon}
+            source={{
+              uri:
+                selectedTab === "one"
+                  ? "https://img.icons8.com/ios-filled/512/file.png"
+                  : "https://img.icons8.com/ios-filled/512/doc.png",
+            }}
+          />
+          <TextInput
+            style={styles.inputs}
+            placeholder={selectedTab === "one" ? "CPF" : "CNPJ"}
+            underlineColorAndroid="transparent"
+            value={cpfCnpj}
+            onChangeText={(text) => setCpfCnpj(text)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Image
+            style={styles.inputIcon}
+            source={{
+              uri: "https://img.icons8.com/ios-filled/512/circled-envelope.png",
+            }}
+          />
+          <TextInput
+            style={styles.inputs}
+            placeholder="Email"
+            keyboardType="email-address"
+            underlineColorAndroid="transparent"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
+        </View>
 
-      <TouchableOpacity
-        style={[styles.buttonContainer, styles.loginButton]}
-        // onPress={() => showAlert("login")}
-      >
-        <Text style={styles.loginText}>Login</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        // onPress={() => showAlert("forgot password")}
-      >
-        <Text style={styles.text}>Forgot your password?</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        // onPress={() => showAlert("sign up")}
-      >
-        <Text style={styles.text}>Sign up</Text>
-      </TouchableOpacity>
+        <View style={styles.inputContainer}>
+          <Image
+            style={styles.inputIcon}
+            source={{
+              uri: "https://img.icons8.com/ios-filled/512/key.png",
+            }}
+          />
+          <TextInput
+            style={styles.inputs}
+            placeholder="Senha"
+            secureTextEntry={true}
+            underlineColorAndroid="transparent"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Image
+            style={styles.inputIcon}
+            source={{
+              uri: "https://img.icons8.com/ios-filled/512/key.png",
+            }}
+          />
+          <TextInput
+            style={styles.inputs}
+            placeholder="Confirme a senha"
+            secureTextEntry={true}
+            underlineColorAndroid="transparent"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
+        </View>
+        <TouchableOpacity
+          style={[styles.buttonContainer, styles.registerButton]}
+        >
+          <Text style={styles.registerText}>Criar nova conta</Text>
+        </TouchableOpacity>
+      </View>
     </ImageBackground>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     height: "100%",
@@ -91,6 +164,34 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  tabContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 20,
+    width: 250,
+  },
+  tab: {
+    flex: 1,
+    fontWeight: "bold",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+    borderBottomWidth: 3,
+    borderBottomColor: "#ccc",
+    backgroundColor: "white",
+    opacity: 0.5,
+  },
+  activeTab: {
+    borderBottomColor: "#00b5ec",
+    opacity: 0.8,
+  },
+  tabText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  formContainer: {
+    paddingHorizontal: 20,
   },
   inputContainer: {
     borderBottomColor: "#2c87ad",
@@ -120,18 +221,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 10,
     width: 250,
     borderRadius: 30,
     color: "white",
   },
-  loginButton: {
+  registerButton: {
     backgroundColor: "#00b5ec",
   },
-  loginText: {
+  registerText: {
     color: "white",
-  },
-  text: {
-    color: "white",
+    fontWeight: "bold",
   },
 });
