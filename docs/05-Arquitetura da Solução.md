@@ -36,21 +36,27 @@ A entidade Reserva representa a reserva de um Local por um Condomino em um deter
 
 ## Esquema Relacional
 
-O Esquema Relacional corresponde à representação dos dados em tabelas juntamente com as restrições de integridade e chave primária.
- 
-As referências abaixo irão auxiliá-lo na geração do artefato “Esquema Relacional”.
+O esquema relacional apresentado abaixo representa a estrutura de dados da aplicação de reserva de espaços em condomínios. Foi projetado para armazenar e relacionar as informações de condomínios, condominos, locais, reservas e usuários.
 
-> - [Criando um modelo relacional - Documentação da IBM](https://www.ibm.com/docs/pt-br/cognos-analytics/10.2.2?topic=designer-creating-relational-model)
+![Diagrama de Interações](img/modelo-relacional.png)
 
 ## Modelo Físico
 
-Entregar um arquivo banco.sql contendo os scripts de criação das tabelas do banco de dados. Este arquivo deverá ser incluído dentro da pasta src\bd.
+Ao final do trabalho será entregue um arquivo banco.sql contendo os scripts de criação das tabelas do banco de dados. Este arquivo será incluído dentro da pasta src\bd.
 
 ## Tecnologias Utilizadas
 
-Descreva aqui qual(is) tecnologias você vai usar para resolver o seu problema, ou seja, implementar a sua solução. Liste todas as tecnologias envolvidas, linguagens a serem utilizadas, serviços web, frameworks, bibliotecas, IDEs de desenvolvimento, e ferramentas.
+As tecnologias utilizadas para resolver o problema de reserva de espaços em condomínios incluem Next.js para o frontend web, React Native para o cliente móvel, uma API Web .NET como middleware e um banco de dados MongoDB como repositório de dados. Cada uma dessas tecnologias foi escolhida por suas características e benefícios específicos.
 
-Apresente também uma figura explicando como as tecnologias estão relacionadas ou como uma interação do usuário com o sistema vai ser conduzida, por onde ela passa até retornar uma resposta ao usuário.
+Next.js é um framework de desenvolvimento web baseado em React, que possibilita a criação criar aplicativos web rápidos, seguros e escaláveis. Já o React Native é uma biblioteca de desenvolvimento de aplicativos móveis que nos permite criar aplicativos móveis de alta qualidade para Android e iOS, utilizando linguagem e ferramentas similarityaos ao React.
+
+A nossa API Web .NET é responsável por receber e processar as solicitações do cliente, seja ele web ou móvel, e se comunicar com o banco de dados para recuperar ou armazenar informações. Isso permite uma separação clara entre a lógica de negócios e a camada de apresentação, tornando a manutenção e atualização da aplicação mais fácil.
+
+Por fim, o MongoDB é um banco de dados Não Relacional (NoSQL) que nos permite armazenar e recuperar grandes quantidades de dados de forma escalável e eficiente. Isso é especialmente importante em nosso caso, pois precisamos lidar com uma grande quantidade de reservas e informações de usuário.
+
+A figura abaixo ilustra como as tecnologias estão relacionadas e como uma interação do usuário com o sistema é conduzida. O usuário faz uma solicitação através do cliente móvel ou web, que é enviada para a API Web .NET. A API então se comunica com o banco de dados MongoDB para recuperar ou armazenar informações. Em seguida, a API retorna a resposta ao cliente, que é apresentada ao usuário.
+
+![Diagrama de Interações](img/interaction_diagram.png)
 
 ## Hospedagem
 
