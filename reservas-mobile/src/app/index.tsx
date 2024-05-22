@@ -7,15 +7,18 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  ScrollView,
+  Alert,
 } from "react-native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
+import { withNavigation } from "react-navigation";
 
-export default function RegistrationScreen() {
-  const [selectedTab, setSelectedTab] = useState("one");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [cpfCnpj, setCpfCnpj] = useState("");
-  const [password, setPassword] = useState("");
+
+interface Props extends NavigationStackScreenProps<{}> {}
+function LoginScreen({ navigation }) {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  // showAlert = (viewId) => Alert.alert("Alert", "Button pressed " + viewId);
 
   return (
     <ImageBackground
@@ -42,113 +45,66 @@ export default function RegistrationScreen() {
           }}
         />
       </View>
-
-      <View style={styles.tabContainer}>
-        <TouchableOpacity
-          style={[styles.tab, selectedTab === "one" ? styles.activeTab : null]}
-          onPress={() => setSelectedTab("one")}
-        >
-          <Text style={styles.tabText}>Usuário</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tab, selectedTab === "two" ? styles.activeTab : null]}
-          onPress={() => setSelectedTab("two")}
-        >
-          <Text style={styles.tabText}>Condomínio</Text>
-        </TouchableOpacity>
+      <View style={styles.logoContainer}></View>
+      <View style={styles.inputContainer}>
+        <Image
+          style={styles.inputIcon}
+          source={{
+            uri: "https://img.icons8.com/ios-filled/512/circled-envelope.png",
+          }}
+        />
+        <TextInput
+          style={styles.inputs}
+          placeholder="Email"
+          keyboardType="email-address"
+          underlineColorAndroid="transparent"
+          // onChangeText={(email) => setEmail({ email })}
+        />
       </View>
-      <View style={styles.formContainer}>
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://img.icons8.com/ios-filled/512/user.png",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Nome"
-            underlineColorAndroid="transparent"
-            value={name}
-            onChangeText={(text) => setName(text)}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri:
-                selectedTab === "one"
-                  ? "https://img.icons8.com/ios-filled/512/file.png"
-                  : "https://img.icons8.com/ios-filled/512/doc.png",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder={selectedTab === "one" ? "CPF" : "CNPJ"}
-            underlineColorAndroid="transparent"
-            value={cpfCnpj}
-            onChangeText={(text) => setCpfCnpj(text)}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://img.icons8.com/ios-filled/512/circled-envelope.png",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Email"
-            keyboardType="email-address"
-            underlineColorAndroid="transparent"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-          />
-        </View>
 
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://img.icons8.com/ios-filled/512/key.png",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Senha"
-            secureTextEntry={true}
-            underlineColorAndroid="transparent"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.inputIcon}
-            source={{
-              uri: "https://img.icons8.com/ios-filled/512/key.png",
-            }}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="Confirme a senha"
-            secureTextEntry={true}
-            underlineColorAndroid="transparent"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-          />
-        </View>
-        <TouchableOpacity
-          style={[styles.buttonContainer, styles.registerButton]}
-        >
-          <Text style={styles.registerText}>Criar nova conta</Text>
-        </TouchableOpacity>
+      <View style={styles.inputContainer}>
+        <Image
+          style={styles.inputIcon}
+          source={{
+            uri: "https://img.icons8.com/ios-filled/512/key.png",
+          }}
+        />
+        <TextInput
+          style={styles.inputs}
+          placeholder="Password"
+          secureTextEntry={true}
+          underlineColorAndroid="transparent"
+          // onChangeText={(password) => setPassword({ password })}
+        />
       </View>
+
+      <TouchableOpacity
+        style={[styles.buttonContainer, styles.loginButton]}
+        // onPress={() => showAlert("login")}
+      >
+        <Text style={styles.loginText}>Entrar</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        // onPress={() => showAlert("forgot password")}
+      >
+        <Text style={styles.text}>Esqueceu a senha?</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+  style={styles.buttonContainer}
+  onPress={() => {
+    navigation.navigate('Register');
+  }}
+>
+  <Text style={styles.text}>Criar nova conta</Text>
+</TouchableOpacity>
     </ImageBackground>
   );
 }
+export default withNavigation(LoginScreen)
+
 
 const styles = StyleSheet.create({
   container: {
@@ -164,34 +120,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: "rgba(0,0,0,0.5)",
-  },
-  tabContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
-    width: 250,
-  },
-  tab: {
-    flex: 1,
-    fontWeight: "bold",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
-    borderBottomWidth: 3,
-    borderBottomColor: "#ccc",
-    backgroundColor: "white",
-    opacity: 0.5,
-  },
-  activeTab: {
-    borderBottomColor: "#00b5ec",
-    opacity: 0.8,
-  },
-  tabText: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  formContainer: {
-    paddingHorizontal: 20,
   },
   inputContainer: {
     borderBottomColor: "#2c87ad",
@@ -226,11 +154,26 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     color: "white",
   },
-  registerButton: {
+  loginButton: {
     backgroundColor: "#00b5ec",
   },
-  registerText: {
+  loginText: {
     color: "white",
-    fontWeight: "bold",
+  },
+  text: {
+    color: "white",
+  },
+  logoContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    resizeMode: "contain",
+    backgroundColor: "white",
+    padding: 30,
+    borderRadius: 30,
   },
 });
