@@ -1,13 +1,13 @@
 ﻿using api_reservas.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace api_reservas.Controllers.DTO
+namespace api_reservas.Models.Dtos
 {
     public class RegisterDTO
     {
         private string _passwordHash;
         public string Nome { get; set; }
-        public EmailAddressAttribute Email { get; set; }
+        public string Email { get; set; }
         public string Cnpj { get; set; }
         public Condomino[]? Condominos { get; set; }
         public Local[]? Locais { get; set; }

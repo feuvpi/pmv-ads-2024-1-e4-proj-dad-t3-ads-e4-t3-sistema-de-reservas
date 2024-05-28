@@ -8,8 +8,7 @@ namespace api_reservas.Repositories
     {
         public IMongoDatabase mongoDatabase;
 
-        public MyMongoRepository(
-            IOptions<DatabaseSettings> dabaseSettings)
+        public MyMongoRepository(IOptions<DatabaseSettings> dabaseSettings)
         {
             var mongoClient = new MongoClient(dabaseSettings.Value.ConnectionString);
 

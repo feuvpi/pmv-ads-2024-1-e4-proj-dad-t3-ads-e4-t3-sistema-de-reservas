@@ -1,4 +1,4 @@
-﻿namespace api_reservas.Dtos
+﻿namespace api_reservas.Models.Dtos
 {
     public class LoginDto
     {

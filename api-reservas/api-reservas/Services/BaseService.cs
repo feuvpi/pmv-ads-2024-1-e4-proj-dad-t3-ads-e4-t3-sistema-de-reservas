@@ -11,6 +11,7 @@ namespace api_reservas.Services
     public class BaseService<T> where T : class, IBaseEntity, new()
     {
 
+
         private readonly IMongoCollection<T> _collection;
 
         /// <summary>
@@ -21,6 +22,11 @@ namespace api_reservas.Services
         {
             string className = typeof(T).Name;
             _collection = myRepository.mongoDatabase.GetCollection<T>(className);
+        }
+
+        public BaseService()
+        {
+
         }
 
         /// <summary>
@@ -34,7 +40,7 @@ namespace api_reservas.Services
         /// Retrieves a single entity by its ID from the database.
         /// </summary>
         /// <param name="id">The ID of the entity to retrieve.</param>
-        /// <returns>A task that represents the asynchronous operation, returning the entity with the specified ID, or null if not found.</returns>
+        /// <returns>A task that represents the asynchrono   operation, returning the entity with the specified ID, or null if not found.</returns>
         public async Task<T?> GetAsync(string id) =>
             await _collection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
